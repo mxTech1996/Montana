@@ -1,51 +1,42 @@
 'use client';
-import { useRouter } from 'next/navigation';
-import { navData } from '@/data';
-import { Navbar as NavbarV2, theme } from 'ecommerce-mxtech';
-import { useInformation } from '@/store/useInformation';
 
-const { useToken } = theme;
+import { useCart } from 'ecommerce-mxtech';
+import Link from 'next/link';
 
 const Navbar = () => {
-  const { dataSite } = useInformation();
-  const router = useRouter();
-  const {
-    token: { colorPrimary },
-  } = useToken();
-
+  const { products } = useCart();
   return (
-    <NavbarV2
-      linksProps={{
-        variant: 'underline',
-        align: 'left',
-      }}
-      textColor='black'
-      withLogo={true}
-      imageProps={{
-        src: dataSite.iconImage,
-        className: 'w-28',
-      }}
-      styleTitle={{
-        fontWeight: 'bold',
-        fontSize: 16,
-        color: 'black',
-      }}
-      links={navData}
-      onClickProduct={(product) => {
-        router.push(`/product/${product.id}`);
-      }}
-      buttonCartProps={{
-        onClick: () => router.push('/my-cart'),
-      }}
-      buttonContactProps={{
-        onClick: () => router.push('/more-information'),
-      }}
-      onRedirect={(path) => router.push(path)}
-      styleHeader={{
-        height: 100,
-        color: 'black',
-      }}
-    />
+    <nav className='flex justify-between items-center px-6 md:px-12 py-4 bg-transparent z-50 relative'>
+      <div className='text-lg font-bold'>Montana</div>
+      <ul className='hidden md:flex gap-6 text-sm'>
+        <li>
+          <a href='/#products' className='hover:text-orange-400'>
+            Products
+          </a>
+        </li>
+        <li>
+          <a href='/#consulting' className='hover:text-orange-400'>
+            Consulting
+          </a>
+        </li>
+        <li>
+          <a href='/#about' className='hover:text-orange-400'>
+            About
+          </a>
+        </li>
+        <li>
+          <a href='/more-information' className='hover:text-orange-400'>
+            Contact
+          </a>
+        </li>
+      </ul>
+      <Link href='/my-cart'>
+        <button className='text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded text-sm font-semibold'>
+          My Cart
+          <span className='ml-2 text-white'>{products.length} </span>
+        </button>
+      </Link>
+    </nav>
   );
 };
 

@@ -1,22 +1,20 @@
 'use client';
-import { useRouter } from 'next/navigation';
 import { footerData } from '@/data';
 import { Footer as FooterComponent } from 'ecommerce-mxtech';
-import Link from 'next/link';
 
 const Footer = () => {
-  const router = useRouter();
-
   return (
-    <FooterComponent
-      backgroundColor='transparent'
-      legal={footerData}
-      onRedirect={(path) => {
-        window.open(path, '_blank');
-      }}
-      visaImage='/images/visaMaster.png'
-      masterImage='/images/openpay.jpg'
-    />
+    <div className='bg-orange-500 text-black'>
+      <FooterComponent
+        backgroundColor='transparent'
+        legal={footerData}
+        textColor={'white'}
+        onRedirect={(path) => {
+          window.open(path, '_blank');
+        }}
+        visaImage='/images/visaMaster.png'
+      />
+    </div>
   );
 };
 

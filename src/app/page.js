@@ -1,124 +1,77 @@
 'use client';
-import {
-  Missions,
-  ProductSection,
-  References,
-  Typography,
-  Hero,
-  Features,
-  FeaturesV2,
-} from 'ecommerce-mxtech';
-import { useRouter } from 'next/navigation';
+
 import Footer from '@/components/organisms/Footer';
 import Navbar from '@/components/organisms/Navbar';
-import { useInformation } from '@/store/useInformation';
-import { primaryColor } from '@/data';
+import ProductsSection from '@/components/organisms/Products';
+import ServicesSection from '@/components/organisms/Services';
+import TestimonialSelector from '@/components/organisms/Testimonials';
+import WhatWeOffer from '@/components/organisms/WhatWeOffer';
+import { dataSite } from '@/data';
+import Link from 'next/link';
 
 export default function Home() {
-  const router = useRouter();
-  const { dataSite } = useInformation();
-
-  console.log(dataSite);
   return (
     <main
       style={{
-        backgroundColor: '#DEF8EBFF',
+        backgroundColor: '#FCFCFCFF',
       }}
     >
       <Navbar />
-      <div className='relative'>
-        <Hero
-          variant='background-img'
-          src={dataSite.image_hero}
-          colorText='#FCFCFCFF'
-          title={dataSite.subtitle}
-          description={dataSite.description}
-          srcSecondary={dataSite.image_hero2}
-          withSubView
-          images={[dataSite.image_hero, dataSite.image_hero2]}
-          styleTextSecondSection={{
-            color: 'black',
-          }}
-          withShadowText
-          contentThirdSection={
-            <div
-              style={{ zIndex: 2 }}
-              className='flex flex-col px-48'
-              id='know-us'
-            >
-              <Typography.Title
-                level={3}
-                className='font-medium mb-10 text-center text-white'
-              >
-                Know Us
-              </Typography.Title>
-              <Missions
-                textColor='#fff'
-                data={dataSite.info}
-                gridColumns={1}
-                variant='text'
-              />
-            </div>
-          }
-        />
-      </div>
-      <div className='container mx-auto flex flex-col gap-20 my-24'>
-        <div className='flex flex-col' id='our-services'>
-          <Typography.Title level={3} className='font-medium mb-10 text-center'>
-            Our Services
-          </Typography.Title>
-          <Features
-            gridColumns={2}
-            variant='card'
-            features={dataSite.services}
-          />
-        </div>
-        <div id='courses'>
-          {dataSite.products.length > 1 && (
-            <ProductSection
-              withCategoryFilter={false}
-              title='All Courses'
-              gridColumns={4}
-              variant='grid'
-              productItemVariant='vertical'
-              onClickImage={(id) => {
-                router.push(`/product/${id}`);
-              }}
-              productVersion='2'
-              carouselOptions={{
-                arrowColor: 'black',
-                fade: true,
-                autoPlay: false,
-                direction: 'horizontal',
-              }}
-              backgroundItemColor='#FBFBFB'
-              stylesItem={{
-                borderRadius: 12,
-              }}
-            />
-          )}
-        </div>
+      {/* Navbar */}
 
-        <div className='flex flex-col' id='references'>
-          <Typography.Title level={3} className='font-medium mb-10 text-center'>
-            References
-          </Typography.Title>
-          <References
-            carouselOptions={{
-              arrowColor: 'black',
-              fade: true,
-              autoPlay: false,
-              direction: 'horizontal',
-            }}
-            variantItem='card'
-            variant='grid'
-            backgroundColor='#CFE5BAFF'
-            references={dataSite.references}
-            gridColumns={3}
-            titleAlign='center'
-          />
+      {/* Hero */}
+      <section
+        className='relative h-[90vh] flex flex-col justify-center items-start px-6 md:px-20 bg-cover bg-center text-white'
+        style={{ backgroundImage: `url(${dataSite.image_hero})` }}
+      >
+        <div className='max-w-xl z-10'>
+          <h1 className='text-4xl md:text-5xl font-bold mb-4'>
+            Learn to Operate <br /> and Manage Material Handling Equipment
+          </h1>
+          <p className='text-gray-300 mb-6'>
+            We provide top-tier consulting and specialized training for handling
+            cranes, hoists, forklifts, and more.
+          </p>
+          <div className='flex gap-4'>
+            <Link href='#about'>
+              <button className='bg-white text-black font-medium px-4 py-2 rounded hover:bg-gray-200 text-sm'>
+                About Us
+              </button>
+            </Link>
+            <Link href='/more-information'>
+              <button className='bg-orange-500 text-white font-medium px-4 py-2 rounded hover:bg-orange-600 text-sm'>
+                Contact Us
+              </button>
+            </Link>
+          </div>
         </div>
-      </div>
+        <div className='absolute inset-0 bg-black/50 z-0' />
+      </section>
+
+      <ServicesSection />
+      <ProductsSection />
+      {/* CTA */}
+      <TestimonialSelector />
+      <WhatWeOffer />
+
+      {/* CTA Section */}
+      <section className='bg-orange-500 text-white py-16 px-6 md:px-20 rounded-t-[50px]'>
+        <div className='max-w-3xl'>
+          <h4 className='text-sm uppercase tracking-wide font-medium mb-2'>
+            How We Help
+          </h4>
+          <h2 className='text-3xl md:text-4xl font-bold mb-4'>
+            {dataSite.subtitle}
+          </h2>
+          <p className='mb-6 text-sm md:text-base'>{dataSite.description}</p>
+
+          <Link href='/more-information'>
+            <button className='bg-white text-orange-500 px-5 py-2 rounded font-semibold text-sm'>
+              Contact Us
+            </button>
+          </Link>
+        </div>
+      </section>
 
       <Footer />
     </main>
